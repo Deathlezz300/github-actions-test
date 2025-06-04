@@ -1,0 +1,20 @@
+#Setup the name for the workflow
+name: Deploy to server from github actions
+
+#Define the trigger for the workflowe
+on:
+  - push:
+    branches:
+      - main
+  
+
+#Definir los trabajos que se van a ejecutar
+jobs:
+  first_job:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Hola mundo
+        uses: echo "Hola mundo desde github actions"
+
+

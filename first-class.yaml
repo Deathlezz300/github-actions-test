@@ -1,0 +1,53 @@
+#Datos primitivos
+
+ciudad : Florencia
+comillas : "123"
+edad : 21
+temperatura : 36.6
+activo : true
+descripcion : null
+comentario : "Esto es un comentario"
+
+#Listas
+
+colores:
+  -rojo
+  -verde
+  -azul
+
+#Diccionarios
+persona:
+  nombre: "Alejandro"
+  apellido: "Toledo"
+  edad: 21
+
+#Lista de valores
+
+usuarios:
+  - nombre: "Alejandro"
+    edad: 21
+  - nombre: "Sigma"
+    edad: 22
+
+#Modificadores String multilinea
+
+mensaje : |
+  Hola,
+  esto es un texto multilinea
+
+#Herencia
+
+defaults : &defaults
+  nombre: "Alejandro"
+  apellido: "Toledo"
+  edad: 21
+
+persona1 :
+  <<: *defaults
+  nombre: "Sigma"
+  edad: 26
+
+persona2:
+  <<: *defaults
+  apellido: "Perez"
+  edad: 30
