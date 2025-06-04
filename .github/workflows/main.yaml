@@ -16,5 +16,14 @@ jobs:
     steps:
       - name: Hola mundo
         run: echo "Hola mundo desde github actions"
+  second_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Probando sisas 2
+        run: |
+          echo "Probando sisas 2"
+          echo "Esto es una prueba de github actions"
+          echo "Probando el segundo job"
 
 
