@@ -3,7 +3,7 @@ name: Deploy to server from github actions
 
 #Define the trigger for the workflowe
 on:
-  - push:
+  push:
     branches:
       - main
   
