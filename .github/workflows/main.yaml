@@ -17,6 +17,10 @@ jobs:
       - name: Hola mundo
         run: echo "Hola mundo desde github actions"
   second_job:
+    # This job depends on the first_job, so after the first job is completed, this one will run
+    needs: 
+      - first_job
+      
     runs-on: ubuntu-latest
 
     steps:
