@@ -15,6 +15,6 @@ jobs:
     
     steps:
       - name: Hola mundo
-        uses: echo "Hola mundo desde github actions"
+        run: echo "Hola mundo desde github actions"
 
 
