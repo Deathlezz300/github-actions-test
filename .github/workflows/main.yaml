@@ -8,6 +8,9 @@ on:
       - main
   
 
+env:
+  NAME: Alejandro Toledo
+
 #Definir los trabajos que se van a ejecutar
 jobs:
   first_job:
@@ -18,6 +21,9 @@ jobs:
         run: echo "Hola mundo desde github actions"
   second_job:
     # This job depends on the first_job, so after the first job is completed, this one will run
+    
+    #Esto se ejecuta siempre y cuando la referencia sea la rama main
+    if: ${{ github.ref === 'refs/heads/main' }}
     needs: 
       - first_job
       
@@ -29,5 +35,7 @@ jobs:
           echo "Probando sisas 2"
           echo "Esto es una prueba de github actions"
           echo "Probando el segundo job"
+      - name: Imprimiendo el nombre
+        run: echo "El nombre es ${{ env.NAME }}"
 
 
