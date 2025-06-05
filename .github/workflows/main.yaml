@@ -23,7 +23,7 @@ jobs:
     # This job depends on the first_job, so after the first job is completed, this one will run
     
     #Esto se ejecuta siempre y cuando la referencia sea la rama main
-    if: ${{ github.ref === 'refs/heads/main' }}
+    if: ${{ github.ref == 'refs/heads/main' }}
     needs: 
       - first_job
       
