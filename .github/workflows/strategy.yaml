@@ -1,0 +1,19 @@
+name : Strategy workflow test
+
+on:
+  push:
+    branches:
+      - strategy
+
+jobs:
+  first_job:
+    name: "Primer trabajo"
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        message: [ "Hola mundo", "Hello world", "Bonjour le monde" ]
+
+    steps:
+      - name: Imprimir el mensaje
+        run: echo "${{ matrix.message }}"
