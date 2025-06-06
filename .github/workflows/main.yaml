@@ -52,4 +52,4 @@ jobs:
       
       - name : print env my_variable
         run : |
-          echo "my_variable is ${{ secrets.my_variable }}"
+          echo "my_variable is $my_variable"
