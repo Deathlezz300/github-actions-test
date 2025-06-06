@@ -45,3 +45,11 @@ jobs:
           echo "Probando el segundo job"
       - name: Imprimiendo el nombre
         run: echo "El nombre es ${{ env.NAME }}"
+
+      - name : create env file
+        run : |
+          echo "my_variable=Hola mundo" >> .env
+      
+      - name : print env my_variable
+        run : |
+          echo "my_variable is ${{ secrets.my_variable }}"
