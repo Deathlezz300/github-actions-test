@@ -6,7 +6,6 @@ on:
   push:
     branches:
       - main
-  
 
 env:
   NAME: Alejandro Toledo
@@ -14,19 +13,28 @@ env:
 #Definir los trabajos que se van a ejecutar
 jobs:
   first_job:
+    name: "Primer trabajo"
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Hola mundo
         run: echo "Hola mundo desde github actions"
+
+      - name: Working dir
+        run: ls -al
+
+        # Using a github action to checkout the repository
+      - name: Action
+        uses: actions/checkout@v4
+
   second_job:
     # This job depends on the first_job, so after the first job is completed, this one will run
-    
+
     #Esto se ejecuta siempre y cuando la referencia sea la rama main
     if: ${{ github.ref == 'refs/heads/main' }}
-    needs: 
+    needs:
       - first_job
-      
+
     runs-on: ubuntu-latest
 
     steps:
@@ -37,5 +45,3 @@ jobs:
           echo "Probando el segundo job"
       - name: Imprimiendo el nombre
         run: echo "El nombre es ${{ env.NAME }}"
-
-
