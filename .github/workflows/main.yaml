@@ -46,13 +46,27 @@ jobs:
       - name: Imprimiendo el nombre
         run: echo "El nombre es ${{ env.NAME }}"
 
-      - name : create env file
+      - name : setup variable
+        # This step sets up a variable that can be used in the next steps
+        id: setup_variable
         run : |
-          echo "my_variable=Hola mundo" > .env
-          set -o allexport
-          source .env
-          set +o allexport
+          echo "my_variable=Hola mundo" >> $GITHUB_OUTPUT
+      
+      - name: Imprimiendo la variable
+        run: echo "La variable es ${{ steps.setup_variable.outputs.my_variable }}"
   
-      - name : print env my_variable
-        run : |
-          echo "my_variable is $my_variable"
+  third_job:
+    name: "Tercer trabajo"
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Generate file
+        run: |
+          echo "this is a test file" >> test.log
+
+      - name: Upload file
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-file
+          path: test.log
