@@ -1,0 +1,78 @@
+#Setup the name for the workflow
+name: Deploy to server from github actions
+
+#Define the trigger for the workflowe
+on:
+  push:
+    branches:
+      - main
+
+env:
+  NAME: Alejandro Toledo
+
+#Definir los trabajos que se van a ejecutar
+jobs:
+  first_job:
+    name: "Primer trabajo"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Hola mundo
+        run: echo "Hola mundo desde github actions"
+
+      - name: Working dir
+        run: ls -al
+
+        # Using a github action to checkout the repository
+      - name: Action
+        uses: actions/checkout@v4
+
+  second_job:
+    # This job depends on the first_job, so after the first job is completed, this one will run
+
+    #Esto se ejecuta siempre y cuando la referencia sea la rama main
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs:
+      - first_job
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Probando sisas 2
+        run: |
+          echo "Probando sisas 2"
+          echo "Esto es una prueba de github actions"
+          echo "Probando el segundo job"
+      - name: Imprimiendo el nombre
+        run: echo "El nombre es ${{ env.NAME }}"
+
+      - name : setup variable
+        # This step sets up a variable that can be used in the next steps
+        id: setup_variable
+        run : |
+          echo "my_variable=Hola mundo" >> $GITHUB_OUTPUT
+      
+      - name: Imprimiendo la variable
+        run: echo "La variable es ${{ steps.setup_variable.outputs.my_variable }}"
+  
+  third_job:
+    name: "Tercer trabajo"
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Generate file
+        run: |
+          echo "this is a test file" >> test.log
+
+      - name: Upload file
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-file
+          path: test.log
+
+      - name : Download file
+        uses: actions/download-artifact@v4
+        with:
+          name: test-file
+          
