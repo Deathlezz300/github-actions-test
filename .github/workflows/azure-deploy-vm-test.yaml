@@ -1,0 +1,28 @@
+name: Azure virtual machine deployment test
+
+on:
+  push:
+    branches:
+      - azure-deploy-vm-test
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name : Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Connect to Virtual machine
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.AZURE_SSH_KEY }}
+
+      - name: Run deployment Script
+        run: |
+          ssh -o StrictHostKeyChecking=no azureuser@172.174.226.182
+          cd /home/azureuser/github-actions-test
+          git pull origin azure-deploy-vm-test
+          npm install
+          npm run build
+
+      
