@@ -13,13 +13,13 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Clona el repositorio
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '22.15.1'
 
       - name: Instala dependencias (limpio)
         run: |
@@ -34,4 +34,4 @@ jobs:
         with:
           app-name: actions-test
           publish-profile: ${{ secrets.AZURE_WEB_APP_PUBLISH_PROFILE }}
-          package: './build'
+          package: './dist'
