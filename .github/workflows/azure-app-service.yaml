@@ -13,14 +13,25 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Cloning repository
-        uses: actions/checkout@v1
+      - name: Clona el repositorio
+        uses: actions/checkout@v3
 
-      - name: Building web app
-        uses: azure/appservice-build@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-      - name: Deploying web app to azure
+      - name: Instala dependencias (limpio)
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install
+
+      - name: Construye la app
+        run: npm run build
+
+      - name: Despliega en Azure App Service
         uses: azure/webapps-deploy@v2
         with:
           app-name: actions-test
           publish-profile: ${{ secrets.AZURE_WEB_APP_PUBLISH_PROFILE }}
+          package: './build'
