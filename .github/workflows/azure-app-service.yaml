@@ -13,28 +13,19 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Cloning repository
+        uses: actions/checkout@v1
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Building web app
+        uses: azure/appservice-build@v3
         with:
-          node-version: 22.15.1
+          platform: "node"
+          node_version: 22.15.1
+          source_directory: "."
+          output-directory: "dist"
 
-      - name: Install dependencies
-        run: |
-          npm install
-
-      - name: Create build
-        run: |
-          npm run build
-
-      - name: Deploy to Azure App Service
-        id: deploy
-        uses: Azure/static-web-apps-deploy@v1
+      - name: Deploying web app to azure
+        uses: azure/webapps-deploy@v2
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_TOKEN }}
-          app_location: "/"
-          output_location: "dist"
-          action: "upload"
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          app-name: actions-test
+          publish-profile: ${{ secrets.AZURE_WEB_APP_PUBLISH_PROFILE }}
