@@ -18,11 +18,6 @@ jobs:
 
       - name: Building web app
         uses: azure/appservice-build@v3
-        with:
-          platform: nodejs
-          node_version: 22.15.1
-          source_directory: "."
-          output-directory: "dist"
 
       - name: Deploying web app to azure
         uses: azure/webapps-deploy@v2
