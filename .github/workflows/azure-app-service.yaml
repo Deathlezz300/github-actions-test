@@ -13,17 +13,18 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Install bunjs
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.2.15
 
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - name: Install dependencies
         run: |
           bun install
+          npm install @rollup/rollup-linux-x64-gnu --no-save
 
       - name: Create build
         run: |
