@@ -1,0 +1,40 @@
+name: Workflow deploy for azure-app-service
+
+on:
+  push:
+    branches:
+      - azure-deploy-test
+
+env:
+  MY_SECRET: ${{ secrets.TEST_SECRET }}
+  ENVIROMENT: ${{ secrets.ENVIROMENT }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install bunjs
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.2.15
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          bun install
+
+      - name: Create build
+        run: |
+          bun run build
+
+      - name: Deploy to Azure App Service
+        id: deploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_TOKEN }}
+          app_location: "/"
+          output_location: "dist"
+          action: "upload"
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
